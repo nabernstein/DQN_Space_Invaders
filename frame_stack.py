@@ -25,8 +25,6 @@ class FrameStack:
         return np.stack(self.stack, axis=2)
 
     def preprocess_frame(self, frame):
-        img = Image.fromarray(frame, 'RGB')
-        img.save('./testimages/rgb_%d.png' % self.frame_no)
         gray = rgb2gray(frame)
         cropped_frame = gray[9:-14, 3:-15]
         # square_frame = transform.resize(cropped_frame, (cropped_frame.shape[0], cropped_frame.shape[0]))

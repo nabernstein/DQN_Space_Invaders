@@ -50,18 +50,17 @@ def main():
     num_actions = env.action_space.n
     agent = DQN_Agent(input_shape, num_actions, learning_rate, gamma)
 
-    mem_capacity = 150_000
+    mem_capacity = 100_000
     mem_minimum = 50_000
     minibatch_size = 32
 
     replay_memory = ReplayMemory(mem_capacity)
 
-    train_for = 1_500_000
+    train_for = 7_000_000
     epsilon = 0.1
     e_min = 0.1
     # e_decay = e_min ** (1 / (float(0.975*train_for)))
     e_decay = (epsilon - e_min) / (1e6)
-    epsilon = 0.05
     save_every = 50_000
 
     pwd = datetime.now().strftime("./%y%m%d-%H%M%S-") + str(train_for)
@@ -75,7 +74,7 @@ def main():
     if not os.path.isdir(rec_dir):
         os.mkdir(rec_dir)
 
-    load_fname = "./si_agent_26h42m.h5"
+    load_fname = "./si_agent_36h42m.h5"
     agent = DQN_Agent(input_shape, num_actions, learning_rate, gamma, load_fname)
     np.random.seed(int(time() + os.getpid()))
     # np.random.seed(123)

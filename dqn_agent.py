@@ -10,7 +10,7 @@ from network import layers
 
 import time
 
-UPDATE_TARGET_EVERY = 1000
+UPDATE_TARGET_EVERY = 10000
 
 class DQN_Agent:
     def __init__(self, input_shape, num_actions, learning_rate, gamma, model_file=None):
