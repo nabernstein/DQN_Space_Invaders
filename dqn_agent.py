@@ -14,6 +14,14 @@ UPDATE_TARGET_EVERY = 10000
 
 class DQN_Agent:
     def __init__(self, input_shape, num_actions, learning_rate, gamma, model_file=None):
+        """
+        Initialize DQN_Agent
+        :param input_shape: Shape of input tensor
+        :param num_actions: Number of possible actions (up, down, shoot, etc.)
+        :param learning_rate: learning rate for Adam
+        :param gamma: epsilon decay for epsilon greedy
+        :param model_file: (optional) file location for an existing model
+        """
         self.input_shape = input_shape
         self.num_actions = num_actions
         self.lr = learning_rate
@@ -27,6 +35,9 @@ class DQN_Agent:
         self.target_model.set_weights(self.model.get_weights())
 
     def build_model(self):
+        """
+        :return: model generated from layers from network.py
+        """
         input_layer = Input(shape=self.input_shape)
         processed_layer = input_layer
         for layer in layers():
@@ -41,9 +52,16 @@ class DQN_Agent:
         return model
 
     def get_qs(self, state):
+        """
+        :return: Q values for a state
+        """
         return self.model.predict(np.expand_dims(state, axis=0))[0]
 
     def train(self, minibatch, step):
+        """
+        :param minibatch: randomly sampled small batch of experiences
+        :param step: current step for tracking purposes
+        """
 
         minibatch_size = len(minibatch)
         current_states = np.array([exp[0]for exp in minibatch])
@@ -75,4 +93,7 @@ class DQN_Agent:
             self.target_model.set_weights(self.model.get_weights())
 
     def save(self, path):
+        """
+        Saves model to a file
+        """
         self.model.save(path)
